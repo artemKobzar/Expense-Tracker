@@ -1,0 +1,62 @@
+﻿@model Expense_Tracker.Models.Category
+
+@{
+    ViewData["PageTitle"] = Model.Id == Guid.Empty ? "Create a new category" : "Edit category";
+}
+<hr />
+<div class="row">
+    <div class="col-md-7">
+        <div class="widget p-5" style="background-color:#39444d">
+            <form asp-action="AddOrEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <div class="mb-3">
+                    <div class='e-btn-group custom-rbt-group'>
+                        <input type="radio" id="radioleft" name="Type" value="Expense" checked="@(Model.Type=="Expense")" />
+                        <label class="e-btn" for="radioleft">Expense</label>
+                        <input type="radio" id="radiomiddle" name="Type" value="Income" checked="@(Model.Type=="Income")" />
+                        <label class="e-btn" for="radiomiddle">Income</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="title" placeholder="Title" ejs-for="Title" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="Title" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-dropdownlist id="ddlIcon" ejs-for="IconId"
+                                      dataSource="@ViewBag.Icons" value="@Model.IconId" placeholder="Icon"
+                                      floatLabelType="Always" allowFiltering="true" ignoreAccent="true"
+                                      filterType="Contains" popupHeight="220px">
+                        <e-dropdownlist-fields value="Value" text="Text"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                    <span asp-validation-for="IconId" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-button id="submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*     <div class="col-md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-shapes fa-2xl"></i>
+        </div>
+    </div> *@
+@* <div>
+    <a asp-action="Index">Back to List</a>
+</div> *@
+
+@* @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} *@
+@*             <div class="mb-3">
+                <label asp-for="IconId" class="control-label"></label>
+                <select asp-for="IconId" class ="form-control" asp-items="ViewBag.IconId"></select>
+            </div> *@
+@*             <div class="mb-3">
+                <label asp-for="Type" class="control-label"></label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div> *@
+

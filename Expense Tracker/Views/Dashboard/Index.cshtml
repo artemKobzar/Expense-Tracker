@@ -1,0 +1,185 @@
+﻿@using Newtonsoft.Json
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["isDashboard"] = true;
+}
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-4">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-2">
+                <span class="lead">Total Income</span>
+                <h1 class="display-6 fw-bold">@ViewBag.TotalIncome</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary expense">
+            <div class="d-flex flex-column justify-content-center p-4">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-2">
+                <span class="lead">Total Expense</span>
+                <h1 class="display-6 fw-bold">@ViewBag.TotalExpense</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary balance">
+            <div class="d-flex flex-column justify-content-center p-4">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-2">
+                <span class="lead">Open Balance</span>
+                <h1 class="display-6 fw-bold">@ViewBag.OpenBalance</h1>
+            </div>
+        </div>
+    </div>
+</div>
+@* <div>
+    <div class="mb-3">
+        <div class='e-btn-group custom-dashboard-rbt-group'>
+            <input type="radio" id="radioTotal" name="Type"/>
+            <label class="e-btn" for="radioTotal">Total</label>
+            <input type="radio" id="radioSevenDays" name="Type"/>
+            <label class="e-btn" for="radioSevenDays">Last 7 days</label>
+            <input type="radio" id="radioCustom" name="Type"/>
+            <label class="e-btn" for="radioCustom">Custom</label>
+        </div>
+    </div>
+</div> *@
+@* <div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <ejs-datepicker id="startdate"
+                            placeholder="Start Date" floatLabelType="Always"
+                            format="MMM-dd-yyy">
+            </ejs-datepicker>
+        </div>
+        <div class="col-md-6">
+            <ejs-datepicker id="enddate"
+                            placeholder="End Date" floatLabelType="Always"
+                            format="MMM-dd-yyy">
+            </ejs-datepicker>
+        </div>
+    </div>
+</div> *@
+
+@* Donut Chart *@
+<div class="row mb-5">
+    <div class="col-md-5">
+        <div class="widget chart">
+            <div class="card-subtitle p-4">
+                <h5 class="fw-bold" style="text-align:center">Total Expense by Category</h5>
+            </div>
+            <ejs-accumulationchart id="doughnutchart" background="#222b33">
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@ViewBag.DoughnutChart"
+                                           xName="TitleWithIcon" yName="Amount"
+                                           innerRadius="60%" legendShape="Circle">
+                        <e-accumulationseries-datalabel name="AmountFormatted" visible></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position="Top" >
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="widget chart">
+            <div class="card-subtitle p-4">
+                <h5 class="fw-bold" style="text-align:center">Income vs Expense per Year 2024</h5>
+            </div>
+                <ejs-chart id="lineContainer1" background="#222b33">
+                <e-chart-tooltipsettings enable="true">
+                </e-chart-tooltipsettings>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-majorgridlines width="0.2" color="#666"></e-majorgridlines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.GroupBarChart" xName="Month" yName="Income" name="Total Income per Year" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"
+                              groupName="Total" columnWidth=1.1 columnSpacing=0.2 fill="#65da41">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                                <e-font fontWeight="600" color="#ffffff"></e-font>
+                            </e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                    <e-series dataSource="@ViewBag.GroupBarChart" xName="Month" yName="Expense" name="Total Expense per Year" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"
+                              groupName="Total" columnWidth=0.8 columnSpacing=0.2 fill="#ff4e48">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                                <e-font color="#ffffff"  fontWeight="600"></e-font>
+                            </e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-12">
+        <div class="widget chart">
+            <div class="card-subtitle p-4">
+                <h5 class="fw-bold" style="text-align:center">Income vs Expense (Current Month)</h5>
+            </div>
+            <ejs-chart id="lineContainer"  background="#222b33">
+                <e-chart-tooltipsettings enable="true" shared="true">
+                </e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="true" enableHighlight="true">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis maximum="1500" interval="100">
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-majorgridlines width="0.2" color="#666"></e-majorgridlines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.BarChart" xName="Day" yName="Income" name="Income" columnWidth="0.8" columnSpacing="0.1"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" fill="#65da41">
+                    </e-series>
+                    <e-series dataSource="@ViewBag.BarChart" xName="Day" yName="Expense" name="Expense" columnWidth="0.8" columnSpacing="0.1"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" fill="#ff4e48">
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+</div>
+@* palettes=@(new string[]{"#0e8d76","#a4b219","#cb9b00","#8a442c","#0454b5","#7d0a0a","#822690","#4c2090","#313e93","#0096ac"}) *@
+@* toggleVisibility="false" *@
+@* <script>
+    function load(args) {
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+        args.chart.width = ej.base.Browser.isDevice ? "150%" : "100%";
+        args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice ? 'None' : 'Trim';
+        args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice ? '-45' : '0';
+    }
+</script> *@

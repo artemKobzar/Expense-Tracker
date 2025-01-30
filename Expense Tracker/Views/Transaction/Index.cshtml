@@ -1,0 +1,153 @@
+﻿@model IEnumerable<Expense_Tracker.Models.Transaction>
+@using Newtonsoft.Json;
+
+@{
+    ViewData["PageTitle"] = "Transactions";
+    ViewData["PageActionText"] = "+ New Transaction";
+    ViewData["PageActionUrl"] = "/Transaction/AddOrEdit";
+}
+@{
+    var filterBarTemplate = new { create = "dropDownCreate", write = "stringWrite" };
+    var templateOptionsMultiSelect = new { create = "multiSelectCreate", write = "multiSelectWrite" };
+    var templateOptionsDatePicker = new { create = "datePickerCreate", write = "datePickerWrite" };
+}
+
+<hr />
+<div>
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <ejs-grid id="transactions" dataSource="@Model" gridLines="None " allowFiltering="true" load="load"
+                      allowSorting="true" allowPaging="true" queryCellInfo="onQueryCellInfo">
+                <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+                <e-grid-filterSettings type="FilterBar"></e-grid-filterSettings>
+                <e-grid-columns>
+                    <e-grid-column headerText="Category" field="Category.TitleWithIcon" filterBarTemplate=filterBarTemplate></e-grid-column>
+                    <e-grid-column headerText="Amount" field="Amount" format="c2" textAlign="Center" width="150px"></e-grid-column>
+                    <e-grid-column headerText="Date" field="Date" width="170px "
+                                   type="date" format="MMM-dd-yyy" textAlign="Center" filterBarTemplate=templateOptionsDatePicker></e-grid-column>
+                    <e-grid-column headerText="Actions" template="#actionColumnTemplate" textAlign="Center" width="120px" allowFiltering="false"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+            <!-- Tooltip container -->
+            <div id="customTooltip" class="custom-tooltip" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<script id="actionColumnTemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-start">
+        <a class="btn btn-sm no-a-decoration" href="/Transaction/AddOrEdit/">
+            <i class="fa-solid fa-plus fa-lg"></i>
+        </a>
+        <a class="btn btn-sm no-a-decoration" href="/Transaction/AddOrEdit/${Id}">
+            <i class="fa-solid fa-pen fa-lg"></i>
+        </a>
+        <form action="/Transaction/Delete/${Id}" method="post">
+    @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-sm btn-link no-a-decoration"
+            onclick="return confirm(&quot;Are sure to delete this record?&quot;)">
+                <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+            </button>
+        </form>
+    </div>
+</script>
+<script>
+    let tooltip = document.getElementById("customTooltip");
+
+    function onQueryCellInfo(args) {
+        if (args.data && args.data.Note) {
+            // Add mouse event listeners for custom tooltip
+            args.cell.addEventListener("mouseenter", function (e) {
+                showTooltip(e, args.data.Note);
+            });
+            args.cell.addEventListener("mouseleave", function () {
+                hideTooltip();
+            });
+        }
+    }
+    function showTooltip(e, text) {
+        tooltip.innerText = text;
+        tooltip.style.display = "block";
+        tooltip.style.top = e.pageY + 10 + "px"; // Adjust position
+        tooltip.style.left = e.pageX + 10 + "px";
+    }
+    function hideTooltip() {
+        tooltip.style.display = "none";
+    }
+</script>
+<script>
+    var dropDown;
+    var dateElement;
+    var data = @Html.Raw(JsonConvert.SerializeObject(Model));
+    function dropDownCreate() {
+        dropDown = document.createElement('select');
+        dropDown.id = 'Category.TitleWithIcon';
+        var option = document.createElement('option');
+        option.value = 'All';
+        option.innerText = 'All';
+        dropDown.appendChild(option);
+
+        // Create a Set to store unique categories
+        let uniqueCategories = new Set();
+
+        // Add unique category titles to the Set
+        data.forEach((item) => {
+            uniqueCategories.add(item.Category.TitleWithIcon);
+        });
+
+        uniqueCategories.forEach((category) => {
+            var option = document.createElement('option');
+            option.value = category;
+            option.innerText = category;
+            dropDown.appendChild(option);
+        });
+        return dropDown;
+    }
+    function stringWrite() {
+        var dropDownList = new ej.dropdowns.DropDownList({
+            change: (args) => {
+                var grid = document.getElementById("transactions").ej2_instances[0];
+                if (args.value !== 'All') {
+                    grid.filterByColumn(args.item.parentElement.id.replace('_options', ''), 'equal', args.value);
+                } else {
+                    grid.removeFilteredColsByField(args.item.parentElement.id.replace('_options', ''));
+                }
+            }
+        });
+        dropDownList.appendTo(dropDown);
+    }
+    function datePickerCreate() {
+        dateElement = document.createElement('input');
+        return dateElement;
+    }
+    function datePickerWrite(args) {
+        var datePickerObject = new ej.calendars.DatePicker({
+            placeholder: 'Select a date', // Add a placeholder
+            format: 'MMM-dd-yyyy',       // Date format
+            cssClass: 'custom-datepicker', // Add a custom class for styling
+            value: new Date(args.column.field),
+            change: handleFilterChange,
+        });
+        datePickerObject.appendTo(dateElement);
+    }
+    function handleFilterChange(args) {
+        var grid = document.getElementById("transactions").ej2_instances[0];
+        var targetElement = ej.grids.parentsUntil(args.element, 'e-filtertext');
+        var columnName = targetElement.id.replace('_filterBarcell', '');
+        if (args.value) {
+            grid.filterByColumn(columnName, 'equal', args.value);
+        } else {
+            grid.removeFilteredColsByField(columnName);
+        }
+    }
+    function load() {
+        var grid = document.getElementById("transactions").ej2_instances[0];
+        grid.columns[3].filterTemplate = '<span></span>';
+    }
+</script>
+
+@* <script id="amountColumnTemplate" type="text/x-template">
+    <span class="${Category.Type == 'Expense' ? 'amount-negative' : 'amount-positive'}">
+    ${Category.Type == 'Expense' ? '- ' : '+ '}${Amount}
+    </span>
+</script> *@

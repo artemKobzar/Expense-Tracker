@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["PageTitle"] = "Report";
+}
+
+<hr />
+<div>
+    <div class="row mb-4">
+        <div class="card-subtitle p-4">
+            <h5 class="fw-bold" style="text-align:left">Choose period for report</h5>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <ejs-datepicker id="startdate"
+                                placeholder="Start Date" floatLabelType="Always"
+                                format="MMM-dd-yyy">
+                </ejs-datepicker>
+                </div>
+        </div>
+        <div class="row mb-3">
+                <div class="col-md-6">
+                    <ejs-datepicker id="enddate"
+                                    placeholder="End Date" floatLabelType="Always"
+                                    format="MMM-dd-yyy">
+                    </ejs-datepicker>
+                </div>
+        </div>
+        <div class="mb-3">
+            <ejs-button id="getReport" content="Get Report" cssClass="e-success" onclick="generateReport()"></ejs-button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function generateReport() {
+        const startDateElement = document.getElementById("startdate").ej2_instances[0].value;
+        const endDateElement = document.getElementById("enddate").ej2_instances[0].value;
+
+        let queryParams = [];
+
+        if (startDateElement) {
+            const formattedStartDate = startDateElement.toISOString().split('T')[0];
+            queryParams.push(`startDate=${formattedStartDate}`);
+        }
+
+        if (endDateElement) {
+            const formattedEndDate = endDateElement.toISOString().split('T')[0];
+            queryParams.push(`endDate=${formattedEndDate}`);
+        }
+
+        const queryString = queryParams.length > 0 ? `?${queryParams.join('&')}` : '';
+
+        // Redirect with the query string
+        window.location.href = `/Report/TransactionGeneratePdf${queryString}`;
+    }
+</script>
+@* window.location.href='/Report/TransactionGeneratePdf' *@

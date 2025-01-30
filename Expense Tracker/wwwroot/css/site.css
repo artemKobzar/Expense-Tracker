@@ -1,0 +1,376 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  font-family: "Ubuntu"
+}
+
+*:not(.fa-solid):not(.fa):not(.e-icons) {
+    font-family: "Ubuntu"
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #2f2f2f;
+    color: #a2a2a2;
+    overflow: hidden;
+}
+.e-bigger {
+    font-size: x-large;
+}
+
+.main-content {
+    margin-left: 200px;
+    overflow-y: auto;
+    height: 92vh;
+}
+
+/*BreadCrumb*/
+.e-breadcrumb a, .e-breadcrumb a:hover {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+/*Button*/
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+/*Hyperlink*/
+.no-a-decoration, .no-a-decoration:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*Menu*/
+#menu {
+    width: 100% !important;
+    background-color: inherit;
+    overflow: hidden;
+}
+
+    #menu .e-menu-item:not(.e-separator) {
+        height: 50px;
+        border-radius: 4px;
+    }
+
+    #menu .e-menu-item {
+        box-sizing: border-box;
+    }
+
+        #menu .e-menu-item a {
+            width: 100%;
+            color: rgb(171, 163, 152);
+            font-weight: 300;
+            padding: 7px 5px;
+            box-sizing: border-box;
+        }
+
+    #menu .e-anchor-wrap {
+        display: inline-block;
+    }
+
+    #menu .e-menu-item .e-anchor-wrap span.e-menu-icon {
+        color: rgb(171, 163, 152);
+    }
+
+    #menu .e-menu-item.e-separator {
+        border: none;
+        margin: 5px 5px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 13px;
+        color: #65da41;
+    }
+
+        #menu .e-menu-item.e-separator:not(:first-child) {
+            margin-top: 35px;
+        }
+/*Navbar*/
+nav.navbar {
+    background-color: #2f2f2f;
+}
+
+    nav.navbar i {
+        padding: 10px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+        nav.navbar i:hover, nav.navbar img:hover {
+            cursor: pointer;
+            background-color: #48545f14;
+            transform: scale(1.05) translateZ(0px);
+        }
+
+nav.navbar {
+    margin-left: 200px;
+}
+
+/*Radio Button Group 3b3b3b*/
+.e-btn-group.custom-rbt-group {
+    width: 100%;
+}
+    .e-btn-group.custom-rbt-group .e-btn {
+        width: 50%;
+    }
+
+.custom-rbt-group label.e-btn {
+    box-shadow: none !important;
+    border: 1px solid #a2a2a2;
+    background-color: rgb(34 43 51);
+    color: #a2a2a2;
+}
+
+.e-btn-group.custom-rbt-group input:checked + label.e-btn {
+    background-color: #a2a2a2;
+    color: #a2a2a2;
+    border: 1px solid #a2a2a2;
+}
+/*Dashboard Radio Button Group 3b3b3b*/
+.e-btn-group.custom-dashboard-rbt-group {
+    width: 100%;
+}
+
+    .e-btn-group.custom-dashboard-rbt-group .e-btn {
+        width: 50%;
+    }
+
+.custom-dashboard-rbt-group label.e-btn {
+    box-shadow: none !important;
+    border: 1px solid #a2a2a2;
+    background-color: rgb(34 43 51);
+    color: #a2a2a2;
+}
+
+.e-btn-group.custom-dashboard-rbt-group input:checked + label.e-btn {
+    background-color: ##a2a2a2;
+    color: ##a2a2a2;
+    border: 1px solid #a2a2a2;
+}
+
+/*SideBar*/
+#sidebar {
+    background-color: #2f2f2f;
+    border-right: 3px solid rgba(75,82,85,0.24);
+    padding: 10px 10px;
+    overflow: hidden;
+}
+    #sidebar .e-menu-wrapper {
+        width: 100%;
+        background-color: inherit;
+    }
+
+#sidebar-toggler {
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+    #sidebar-toggler:hover {
+        cursor: pointer;
+        background-color: #48545f14;
+        transform: scale(1.05) translateZ(0px);
+    }
+
+#sidebar.e-close {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+    #sidebar.e-close .app-logo {
+        display: none;
+    }
+
+    #sidebar.e-close .e-anchor-wrap, #sidebar.e-close .e-menu-item.e-menu-caret-icon {
+        font-size: 0px;
+    }
+
+    #sidebar.e-close .profile-wrapper .titles {
+        display: none !important;
+    }
+
+
+    #sidebar.e-open .e-anchor-wrap,
+    #sidebar.e-close .e-menu-icon, #sidebar.e-open .e-menu-icon {
+        visibility: visible;
+    }
+
+#sidebar.e-open .profile-wrapper .titles, #sidebar.e-open .app-logo {
+    display: flex;
+}
+
+#sidebar.e-sidebar.e-right.e-close {
+    visibility: visible;
+    transform: translateX(0%);
+}
+
+#sidebar.e-open #sidebar-toggler:before {
+    content: '\f100'
+}
+
+#sidebar.e-close #sidebar-toggler:before {
+    content: '\f101'
+}
+
+/*Grid*/
+.e-grid {
+    border: 0;
+    border-radius: 5px;
+}
+
+    .e-grid .e-gridcontent, .e-grid .e-table {
+        background-color: #39444d;
+    }
+
+    .e-grid .e-gridheader {
+        border: 5px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 10px;
+        background-color: #222b33;
+    }
+
+        .e-grid .e-gridheader .e-headercell {
+            background-color: #222b33;
+        }
+
+    .e-grid .e-gridpager {
+        background-color: #39444d;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .e-grid .e-pagercontainer {
+        border: none;
+        background-color: #39444d;
+    }
+
+    .e-grid .e-content table {
+        padding: 0px 10px;
+    }
+.e-pagercontainer .e-icons {
+    background-color: #39444d;
+    border: none !important;
+}
+/*Widget*/
+.widget {
+    border-radius: 1rem;
+    background-color: #39444d;
+}
+
+    .widget.summary > div:first-child {
+        background-color: #222b33;
+        padding: 1rem;
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
+
+        .widget.summary > div:first-child i {
+            font-weight: bold;
+        }
+
+    .widget.income > div:first-child {
+        color: #65da41;
+    }
+
+    .widget.expense > div:first-child {
+        color: #ff4e48;
+    }
+
+    .widget.balance > div:first-child {
+        color: #2aa1ff;
+    }
+
+    .widget.chart {
+        padding: 5px;
+    }
+
+    /*Popup Note*/
+.custom-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+    .custom-tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: 100%; /* Triangle appears above */
+        left: 50%;
+        margin-left: -6px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: transparent transparent #333 transparent;
+    }
+
+/* Background and border for the entire filter bar (cells) */
+.e-grid .e-filterbarcell {
+    background-color: #222b33 !important; /* Light gray or desired color */
+    border: none; /* Optional border for separation */
+}
+
+/*General Styling for Filter Inputs*/
+.e-grid .e-filterbarcell input,
+.e-grid .e-filterbarcell select {
+    background-color: #39444d !important;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+}
+
+ /*Styling for the Date Picker*/
+.custom-datepicker input {
+    background-color: #222b33 !important;
+    width: 200px !important;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    max-width: none;
+    padding: 5px;
+}
+
+/*Styling for the Dropdown  #222b33*/
+.e-dropdownbase .e-input {
+    background-color: #222b33;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #ffffff;
+    width: 100%;
+}
+
+     /*Additional Hover and Focus Styles*/
+    .e-grid .e-filterbarcell input:focus,
+    .custom-datepicker input:focus,
+    .e-dropdownbase .e-input:focus {
+        border-color: #ffffff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+/* Add hover effect to dropdowns */
+.e-grid .e-filterbarcell select:hover {
+    background-color: #e9ecef; /* Light hover effect */
+}
